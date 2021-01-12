@@ -30,7 +30,7 @@ export default {
     text-align: center;
     font-size: 12px;
     padding: 10px 0 20px;
-
+    background-color: snow;
     border-bottom: 10px solid #eee;
   }
 
