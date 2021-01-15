@@ -32,7 +32,6 @@ export default {
     padding: 10px 0 20px;
     background-color: snow;
     border-bottom: 10px solid #eee;
-    z-index: 1;
   }
 
   .recommend-item {

@@ -27,7 +27,8 @@ export default {
   },
   methods:{
     itemClick(index){
-      this.currentIndex = index
+      this.currentIndex = index;
+      this.$emit('tabClick',index)//子传父 将详情页的点击传出去
     }
   }
 }
