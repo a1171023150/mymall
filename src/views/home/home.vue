@@ -1,61 +1,11 @@
 <template>
   <div id="home">
-    <nav-bar class="home-nav"><div slot="center">花花街</div></nav-bar>
+    <nav-bar class="home-nav"><div slot="center">拇指街</div></nav-bar>
     <home-swiper :banners="banners"/>
     <recommend-view :recommends="recommends"/>
     <feature-view/>
     <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
-
-    <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
-      <li>7</li>
-      <li>8</li>
-      <li>9</li>
-      <li>0</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1 1 1</li>
-      <li>1 1 1</li>
-    </ul>
+    <goods-list :goods="goods['pop'].list"/>
   </div>
 </template>
 
@@ -66,6 +16,7 @@
 
   import NavBar from 'components/common/navbar/NavBar'
   import TabControl from 'components/content/tabControl/TabControl'
+  import GoodsList from 'components/content/goods/GoodsList'
 
   import {getHomeMultidata, getHomeGoods} from 'network/home'
   
@@ -76,7 +27,8 @@ export default {
     RecommendView,
     FeatureView,
     NavBar,
-    TabControl
+    TabControl,
+    GoodsList
   },
   data(){
     return{
@@ -100,7 +52,6 @@ export default {
   methods: {
     getHomeMultidata(){
       getHomeMultidata().then(res => {
-      // console.log(res);
       this.banners = res.data.banner.list;
       this.recommends = res.data.recommend.list;
     })
@@ -110,6 +61,7 @@ export default {
       getHomeGoods(type, page).then(res => {
         this.goods[type].list.push(...res.data.list)
         this.goods[type].page += 1
+        console.log(res);
     })
     }
     
@@ -134,5 +86,6 @@ export default {
   .tab-control {
     position: sticky;
     top: 44px;
+    z-index: 9;
   }
 </style>

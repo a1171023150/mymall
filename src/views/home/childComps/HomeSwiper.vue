@@ -15,6 +15,7 @@
 
 export default {
   name:'HomeSwiper',
+  //props数据获取
   props: {
     banners: {
       type: Array,
