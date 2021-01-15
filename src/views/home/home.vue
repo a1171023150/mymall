@@ -32,6 +32,8 @@ export default {
     TabControl,
     GoodsList
   },
+
+
   data(){
     return{
       banners: [],
@@ -44,11 +46,15 @@ export default {
       currentType:"pop",
     }
   },
+
+
   computed:{
     showGoods() {
       return this.goods[this.currentType].list
     }
   },
+
+
   created() {
     //1.请求多个数据
     this.getHomeMultidata()
@@ -57,6 +63,8 @@ export default {
     this.getHomeGoods('new')
     this.getHomeGoods('sell')
   },
+
+
   methods: {
     /**
      * 事件监听
@@ -73,6 +81,7 @@ export default {
           this.currentType = 'sell'
       }
     },
+    
     /**
      *网络请求 
      */
