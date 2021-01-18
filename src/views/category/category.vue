@@ -164,21 +164,23 @@ export default {
       //2，侦测手指位置
       //3，侦测所有位置
       probeType:2,//scroll事件，监听实时滚动
-      click:true,//wrapper里内容是否可点击
+      click:true,//wrapper里内容是否可点击,现在好像已经取消了
       pullUpLoad:true,//pullingup事件，上拉加载更多
 
     }),
     this.scroll.on('scroll', (position) => {
-      console.log(position);
+      // console.log(position);
     }),
+      //     //发送网络请求
+      //     //请求完成后，将新的数据展示出来后继续请求
     this.scroll.on('pullingUp', () => {
       console.log('上拉加载更多');
     })
   },
-
+/**
+ * 原生js
+ */
   //   bscroll.on('pullingup',() => {
-  //     //发送网络请求
-  //     //请求完成后，将新的数据展示出来后继续请求
   //     setTimeout(() => {
   //       bscroll.finishPullUp()
   //     },2000)
@@ -187,9 +189,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .wrapper {
-  height: 200px;
+  height: 100vh;
   overflow: hidden;
   background-color: #126463;
 }

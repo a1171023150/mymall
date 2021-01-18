@@ -1,13 +1,24 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">拇指街</div></nav-bar>
-    <home-swiper :banners="banners"/>
-    <recommend-view :recommends="recommends"/>
-    <feature-view/>
-    <tab-control class="tab-control" 
-    :titles="['流行','新款','精选']" 
-    @tabClick="tabClick"/>
-    <goods-list :goods="showGoods"/>
+    <scroll class="content" 
+            ref="scroll" 
+            :probe-type="3" 
+            :pull-up-load="true"
+            @scroll="contentScroll"
+            @pulling-up="loadMore">
+      <home-swiper :banners="banners"/>
+      <recommend-view :recommends="recommends"/>
+      <feature-view/>
+      <tab-control  class="tab-control" 
+                    :titles="['流行','新款','精选']" 
+                    @tabClick="tabClick"/>
+      <goods-list :goods="showGoods"/>
+    </scroll>
+    <!-- .native 监听组件的原生事件的点击事件 -->
+    <back-top class="backtop" 
+              @click.native="backClick" 
+              v-show="isShowBackTop"/> 
   </div>
 </template>
 
@@ -19,6 +30,8 @@
   import NavBar from 'components/common/navbar/NavBar'
   import TabControl from 'components/content/tabControl/TabControl'
   import GoodsList from 'components/content/goods/GoodsList'
+  import Scroll from 'components/common/scroll/Scroll'
+  import BackTop from 'components/content/backTop/BackTop'
 
   import {getHomeMultidata, getHomeGoods} from 'network/home'
   
@@ -30,7 +43,9 @@ export default {
     FeatureView,
     NavBar,
     TabControl,
-    GoodsList
+    GoodsList,
+    Scroll,
+    BackTop
   },
 
 
@@ -44,6 +59,7 @@ export default {
         'sell':{page: 0, list: []},
       },
       currentType:"pop",
+      isShowBackTop:false
     }
   },
 
@@ -69,7 +85,7 @@ export default {
     /**
      * 事件监听
      */
-    tabClick(index){
+    tabClick(index) {
       switch (index) {
         case 0:
           this.currentType = 'pop'
@@ -80,6 +96,17 @@ export default {
         case 2:
           this.currentType = 'sell'
       }
+    },
+    backClick() {
+      this.$refs.scroll.scrollTo(0, 0)//拿到组件对象(scroll.vue)的scroll
+    },
+    contentScroll(position) {
+      this.isShowBackTop = (-position.y) > 1000
+    },
+    loadMore() {
+      this.getHomeGoods(this.currentType)
+
+      // this.$refs.scroll.scroll.refresh()
     },
     
     /**
@@ -96,17 +123,22 @@ export default {
       getHomeGoods(type, page).then(res => {
         this.goods[type].list.push(...res.data.list)
         this.goods[type].page += 1
-        console.log(res);
+        // console.log(res);
+        this.$refs.scroll.finishPullUp()
     })
     }
+
+
     
   }
 }
 </script>
 
-<style>
+<style scoped>
   #home {
     padding-top: 44px;
+    height: 100vh;
+    position: relative;
   }
   .home-nav {
     background-color: var(--color-tint);
@@ -122,5 +154,15 @@ export default {
     position: sticky;
     top: 44px;
     z-index: 9;
+  }
+  .content {
+    /* height: calc(100%-93px); */
+    /* height: 300px; */
+    overflow: hidden;
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
   }
 </style>

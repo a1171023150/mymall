@@ -36,7 +36,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .tabbar {
     width: snow;
     z-index: 100;
