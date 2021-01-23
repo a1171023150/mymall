@@ -8,7 +8,7 @@
             @scroll="contentScroll"
             @pulling-up="loadMore">
       <home-swiper :banners="banners"/>
-      <recommend-view :recommends="recommends"/>
+      <!-- <recommend-view :recommends="recommends"/> -->
       <feature-view/>
       <tab-control  class="tab-control" 
                     :titles="['流行','新款','精选']" 

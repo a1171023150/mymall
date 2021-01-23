@@ -34,7 +34,7 @@ export default {
       default: true
     }
   },
-  data: function () {
+  data() {
     return {
       slideCount: 0, //元素个数
       totalWidth: 0, //swiper的宽度
