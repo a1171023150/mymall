@@ -1,4 +1,4 @@
-# mymall
+# mymall 仅完善首页模块
 
 ## Project setup
 ```
